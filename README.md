@@ -2,9 +2,9 @@
 Yet another C++ LINQ.
 
 ## Overview
-A header-only C++ library to provide a simple yet very useful, efficient and robust LINQ library.
+A header-only C++ library to provide a simple yet very useful, efficient and robust LINQ.
 
-Language in-line query (LINQ) was originally developed for C# as a way to elegantly express operations on collections, using a SQL-style notation. This often makes code much more elegant. LINQ doesn't provide any new features which couldn't be implemented by hand in just a few lines more, but instead makes simple common tasks involving collections much simpler and nicer.
+Language in-line query (LINQ) was originally developed for C# as a way to elegantly express operations on collections, using a SQL-style notation. This often makes code much more elegant. LINQ doesn't provide any new features which couldn't be implemented by hand in just a few lines more, but instead makes many common tasks involving collections much simpler and nicer.
 
 ## A quick example
 
@@ -40,10 +40,10 @@ int main(int argc, char**argv)
 
 (Why you should choose this LINQ over others)
 
-* Header-only, so easily integrated into a project.
+* Header-only, so is easily integrated into a project.
 * Cross platform, pure C++.
-* Generally does not need any memory allocation.
-* Does not introduce overhead.
-* Model's C# interface (no ugly ```<<``` operator overloading).
-* Can store LINQ expressions in ```auto```, again without memory allocation.
-* Can pass LINQ expressions into functions/methods (without memory allocation or templating the target method).
+* Generally does not need any (heap-based) memory allocation.
+* Low overhead.
+* Models C# interface (no ugly ```>>``` operator overloading).
+* Can store LINQ expressions in ```auto```, without heap allocation.
+* Provides ```linq::enumerator<T>``` interface for method parameters, avoiding templating the target method or memory allocation.
