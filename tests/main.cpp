@@ -14,6 +14,17 @@
 
 #include <cassert>
 
+namespace linq
+{
+	template<typename Derived>
+	class user_hooks<Derived, void>
+	{
+	public:
+		int foo() { return 1; }
+
+		int count2() const { return static_cast<const Derived*>(this)->count() * 2; }
+	};
+}
 
 template<typename E1, typename E2>
 class my_zip
@@ -104,6 +115,8 @@ void test_enumerable(E e)
 	test_enumerable2(e);
 	test_enumerable2(linq::enumerable<int>(e));
 	test_enumerable2((const linq::enumerable<int>&)e);
+	test_enumerable2(e.ptr());
+	test_enumerable2(e.ptr(std::allocator<char>()));
 }
 
 template<typename E>
@@ -273,7 +286,6 @@ int main(int argc, const char * argv[])
 
 	//select on a field on an enumerable.
 
-	std::cout << linq::from("Tests passed!").select(enquote) << std::endl;
 
 	// Now for v2
 
@@ -281,4 +293,9 @@ int main(int argc, const char * argv[])
 		auto i = linq::range_t<int>(1,3,1);
 		linq::enumerable<int> x(i);
 	}
+
+	assert( linq::value(1).foo()==1 );
+	assert( linq::from({1,2,3}).count2()==6 );
+
+	std::cout << linq::from("Tests passed!").select(enquote) << std::endl;
 }

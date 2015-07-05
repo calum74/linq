@@ -12,6 +12,7 @@
 #include <vector>
 #include <functional>
 #include <iostream>
+#include <memory>
 
 #include "linq/fwd.hpp"
 #include "linq/util.hpp"
@@ -25,7 +26,6 @@
 #include "linq/reverse.hpp"
 #include "linq/sort.hpp"
 #include "linq/empty.hpp"
-#include "linq/linq.hpp"
 #include "linq/value.hpp"
 #include "linq/container_ref.hpp"
 #include "linq/container_store.hpp"

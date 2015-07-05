@@ -56,6 +56,8 @@ namespace linq
 	template<typename E> class repeat_n_t;
 	template<typename E> class keys_t;
 	template<typename E> class values_t;
+
+	template<typename Base> class enumerable_ptr;
 }
 
 

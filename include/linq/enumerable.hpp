@@ -41,7 +41,22 @@ namespace linq
 	};
 
 
+	template<typename Base>
+	class enumerable_ptr : public methods<enumerable_ptr<Base>, Base>
+	{
+	public:
+		typedef std::shared_ptr<Base> ptr_type;
+		typedef typename Base::value_type value_type;
+		enumerable_ptr(const ptr_type & p) : m_ptr(p) { }
 
+		bool move_first() const { return m_ptr->move_first(); }
+		bool move_next() const { return m_ptr->move_next(); }
+		bool move_prev() const { return m_ptr->move_prev(); }
+		bool move_last() const { return m_ptr->move_last(); }
+		const value_type & get_value() const { return m_ptr->get_value(); }
+	private:
+		std::shared_ptr<Base> m_ptr;
+	};
 
 	template<typename T>
 	bool operator==(const ienumerable<T> &e1, const ienumerable<T> &e2)

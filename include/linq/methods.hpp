@@ -12,14 +12,14 @@
 namespace linq
 {
 	// !! Think about this
-	template<typename Derived, typename Base, typename Generic>
+	template<typename Derived, typename Generic>
 	struct user_hooks
 	{
 	};
 
 
 	template<typename Derived, typename Base>
-	class methods : public Base // , public user_hooks<Derived, Base, void>
+	class methods : public Base, public user_hooks<Derived, void>
 	{
 	public:
 		typedef int size_type;
@@ -271,6 +271,16 @@ namespace linq
 			return select_t<Derived, values_t<Derived>> (get(), values_t<Derived>());
 		}
 
+		enumerable_ptr<Base> ptr() const
+		{
+			return enumerable_ptr<Base>(std::make_shared<Derived>(get()));
+		}
+
+		template<typename Alloc>
+		enumerable_ptr<Base> ptr(const Alloc & a) const
+		{
+			return enumerable_ptr<Base>(std::allocate_shared<Derived>(a, get()));
+		}
 
 	};
 }

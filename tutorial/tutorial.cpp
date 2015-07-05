@@ -17,18 +17,18 @@ bool is_even(int x)
 
 void tutorial()
 {
+	// Create an enumerable sequence from an initalizer list
+	linq::from( { 1, 2, 3 } );
+
 	// Create an enumerable sequence from any container
 	std::vector<int> vec;
-	linq::from(vec);
+	std::cout << linq::from(vec);
 
 	// Create an enumerable range of numbers
 	linq::range(1,10);
 
 	// Create an enumerable range 2,4,6,8,10
 	linq::range(2,10,2);
-
-	// Create an enumerable sequence from an initalizer list
-	linq::from( { 1, 2, 3 } );
 
 	// Create an enumerable sequence from a pair_of_iterators
 	std::map<std::string, int> ages;
@@ -56,6 +56,7 @@ void tutorial()
 
 	std::vector<Person> people;
 
+	// Store a linq expression in a local variable
 	auto centegenarians =
 		linq::from(people).
 		where([](const Person &p) { return p.age>=100; });
