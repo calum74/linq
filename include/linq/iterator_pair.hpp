@@ -14,7 +14,7 @@ namespace linq
 
 	template<typename It>
 	class iterator_pair :
-		public v2::decorate<iterator_pair<It>, typename util::enumerable_type<It>::iface>
+		public methods<iterator_pair<It>, typename util::enumerable_type<It>::iface>
 	{
 	public:
 		iterator_pair(It from, It to) : from(from), to(to)

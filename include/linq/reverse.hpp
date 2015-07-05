@@ -12,7 +12,7 @@
 namespace linq
 {
 	template<typename Enumerable>
-	class reverse_t : public v2::decorate<reverse_t<Enumerable>, typename Enumerable::interface_type>
+	class reverse_t : public methods<reverse_t<Enumerable>, typename Enumerable::interface_type>
 	{
 	public:
 		typedef typename Enumerable::value_type value_type;

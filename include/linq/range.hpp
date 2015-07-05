@@ -11,7 +11,7 @@
 namespace linq
 {
 	template<typename T>
-	class range_t : public v2::decorate<range_t<T>, v2::ireversible<T>>
+	class range_t : public methods<range_t<T>, ireversible<T>>
 	{
 	private:
 		T from, stride, to;

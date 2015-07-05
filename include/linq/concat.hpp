@@ -12,7 +12,7 @@
 namespace linq
 {
 	template<typename Enumerable1, typename Enumerable2>
-	class concat_t : public v2::decorate<concat_t<Enumerable1, Enumerable2>,
+	class concat_t : public methods<concat_t<Enumerable1, Enumerable2>,
 		typename util::combined_interface<
 			typename Enumerable1::interface_type, typename Enumerable2::interface_type>::type>
 	{

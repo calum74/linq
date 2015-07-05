@@ -12,7 +12,7 @@
 namespace linq
 {
 	template<typename Enumerable>
-	class repeat_t : public v2::decorate<repeat_t<Enumerable>, typename Enumerable::interface_type>
+	class repeat_t : public methods<repeat_t<Enumerable>, typename Enumerable::interface_type>
 	{
 	public:
 		repeat_t(Enumerable e) : source(e) { }
@@ -31,7 +31,7 @@ namespace linq
 	};
 
 	template<typename Enumerable>
-	class repeat_n_t : public v2::decorate<repeat_n_t<Enumerable>, typename Enumerable::interface_type>
+	class repeat_n_t : public methods<repeat_n_t<Enumerable>, typename Enumerable::interface_type>
 	{
 	public:
 		typedef typename Enumerable::value_type value_type;

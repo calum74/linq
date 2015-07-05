@@ -14,7 +14,7 @@ namespace linq
 	// References a container
 	// !! Base type: reversible or not ??
 	template<typename Container>
-	class container_ref : public v2::decorate<
+	class container_ref : public methods<
 		container_ref<Container>,
 		typename util::container_type<Container>::iface >
 	{

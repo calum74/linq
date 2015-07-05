@@ -11,17 +11,16 @@
 
 namespace linq
 {
-	namespace v2
-	{
-		template<typename T> class ienumerable;
-		template<typename T> class ireversible;
+	template<typename T> class ienumerable;
+	template<typename T> class ireversible;
 
-		template<typename T> class enumerable;
-		template<typename T> class reversible;
+	template<typename T> class enumerable;
+	template<typename T> class reversible;
 
-		template<typename Derived, typename Base> class decorate;
-	};
-	
+	template<typename Derived, typename Base> class methods;
+
+	// ?? Shared_ptr<ienumerable>
+
 	template<typename Source, typename Predicate>
 	class where_t;
 

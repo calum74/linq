@@ -12,7 +12,7 @@
 namespace linq
 {
 	template<typename Enumerable, typename Predicate>
-	class until_t : public v2::decorate<until_t<Enumerable,Predicate>, v2::ienumerable<typename Enumerable::value_type>>
+	class until_t : public methods<until_t<Enumerable,Predicate>, ienumerable<typename Enumerable::value_type>>
 	{
 	public:
 		typedef typename Enumerable::value_type value_type;

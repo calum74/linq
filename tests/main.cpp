@@ -102,8 +102,8 @@ template<typename E>
 void test_enumerable(E e)
 {
 	test_enumerable2(e);
-	test_enumerable2(linq::v2::enumerable<int>(e));
-	test_enumerable2((const linq::v2::enumerable<int>&)e);
+	test_enumerable2(linq::enumerable<int>(e));
+	test_enumerable2((const linq::enumerable<int>&)e);
 }
 
 template<typename E>
@@ -113,7 +113,7 @@ void test_reversible(E e)
 	test_enumerable(e.reverse().reverse());
 
 	test_reversible2(e);
-	test_reversible2((const linq::v2::reversible<int>&)e);
+	test_reversible2((const linq::reversible<int>&)e);
 }
 
 
@@ -133,8 +133,8 @@ std::string enquote(char c)
 
 int main(int argc, const char * argv[])
 {
-	typedef linq::v2::enumerable<int> intseq;
-	typedef linq::v2::reversible<int> reversible_seq;
+	typedef linq::enumerable<int> intseq;
+	typedef linq::reversible<int> reversible_seq;
 
 	// Test the range enumerable
 	assert( linq::range(1,3)==linq::range(1,3) );
@@ -279,6 +279,6 @@ int main(int argc, const char * argv[])
 
 	{
 		auto i = linq::range_t<int>(1,3,1);
-		linq::v2::enumerable<int> x(i);
+		linq::enumerable<int> x(i);
 	}
 }

@@ -13,7 +13,7 @@
 namespace linq
 {
 	template<typename Enumerable, typename Predicate>
-	class where_t : public v2::decorate<where_t<Enumerable,Predicate>, typename Enumerable::interface_type>
+	class where_t : public methods<where_t<Enumerable,Predicate>, typename Enumerable::interface_type>
 	{
 		Enumerable source;
 		Predicate predicate;

@@ -23,15 +23,15 @@ namespace linq
 		};
 
 		template<typename T>
-		struct combined_interface<v2::ienumerable<T>, v2::ireversible<T>>
+		struct combined_interface<ienumerable<T>, ireversible<T>>
 		{
-			typedef v2::ienumerable<T> type;
+			typedef ienumerable<T> type;
 		};
 
 		template<typename T>
-		struct combined_interface<v2::ireversible<T>, v2::ienumerable<T>>
+		struct combined_interface<ireversible<T>, ienumerable<T>>
 		{
-			typedef v2::ienumerable<T> type;
+			typedef ienumerable<T> type;
 		};
 
 		template<typename Iterator,
@@ -42,28 +42,28 @@ namespace linq
 		struct enumerable_type<Iterator, std::input_iterator_tag>
 		{
 			typedef typename std::iterator_traits<Iterator>::value_type value_type;
-			typedef v2::ienumerable<value_type> iface;
+			typedef ienumerable<value_type> iface;
 		};
 
 		template<typename Iterator>
 		struct enumerable_type<Iterator, std::forward_iterator_tag>
 		{
 			typedef typename std::iterator_traits<Iterator>::value_type value_type;
-			typedef v2::ienumerable<value_type> iface;
+			typedef ienumerable<value_type> iface;
 		};
 
 		template<typename Iterator>
 		struct enumerable_type<Iterator, std::bidirectional_iterator_tag>
 		{
 			typedef typename std::iterator_traits<Iterator>::value_type value_type;
-			typedef v2::ireversible<value_type> iface;
+			typedef ireversible<value_type> iface;
 		};
 
 		template<typename Iterator>
 		struct enumerable_type<Iterator, std::random_access_iterator_tag>
 		{
 			typedef typename std::iterator_traits<Iterator>::value_type value_type;
-			typedef v2::ireversible<value_type> iface;
+			typedef ireversible<value_type> iface;
 		};
 
 		template<typename Container>

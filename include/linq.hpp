@@ -17,7 +17,7 @@
 #include "linq/util.hpp"
 #include "linq/methods.hpp"
 
-// #include "linq/enumerable.hpp"
+#include "linq/enumerable.hpp"
 #include "linq/range.hpp"
 #include "linq/concat.hpp"
 #include "linq/select.hpp"
@@ -31,7 +31,7 @@
 #include "linq/container_store.hpp"
 #include "linq/array_ref.hpp"
 #include "linq/limit.hpp"
-// #include "linq/reversible.hpp"
+#include "linq/reversible.hpp"
 #include "linq/until.hpp"
 #include "linq/iterator_pair.hpp"
 #include "linq/repeat.hpp"

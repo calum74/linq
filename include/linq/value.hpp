@@ -12,7 +12,7 @@
 namespace linq
 {
 	template<typename T>
-	class value_t : public v2::decorate<value_t<T>, v2::ireversible<T>>
+	class value_t : public methods<value_t<T>, ireversible<T>>
 	{
 	public:
 		typedef T value_type;

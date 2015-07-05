@@ -14,7 +14,7 @@ namespace linq
 	// Takes a copy of a container
 
 	template<typename Container>
-	class container_store : public v2::decorate<
+	class container_store : public methods<
 		container_store<Container>,
 		typename util::container_type<Container>::iface >
 	{
@@ -23,7 +23,7 @@ namespace linq
 		typedef typename Container::const_iterator container_iterator;
 		typedef typename Container::allocator_type allocator_type;
 
-		container_store(v2::enumerable<value_type> s, allocator_type alloc = allocator_type()) : container(alloc)
+		container_store(enumerable<value_type> s, allocator_type alloc = allocator_type()) : container(alloc)
 		{
 			// container.assign(s.begin(), s.end());
 			for(const auto &i : s)

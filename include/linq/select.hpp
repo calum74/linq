@@ -106,20 +106,20 @@ namespace linq
 	struct select_base;
 
 	template<typename NewT, typename OldT>
-	struct select_base<NewT, v2::ienumerable<OldT>>
+	struct select_base<NewT, ienumerable<OldT>>
 	{
-		typedef v2::ienumerable<NewT> type;
+		typedef ienumerable<NewT> type;
 	};
 
 	template<typename NewT, typename OldT>
-	struct select_base<NewT, v2::ireversible<OldT>>
+	struct select_base<NewT, ireversible<OldT>>
 	{
-		typedef v2::ireversible<NewT> type;
+		typedef ireversible<NewT> type;
 	};
 
 
 	template<typename Enumerable, typename Fn>
-	class select_t : public v2::decorate<
+	class select_t : public methods<
 		select_t<Enumerable,Fn>,
 		typename select_base<
 			typename select_value_type<Enumerable,Fn>::value_type,
@@ -215,8 +215,8 @@ namespace linq
 
 	template<typename Enumerable, typename Fn>
 	class select_many_t : public
-		v2::decorate<select_many_t<Enumerable,Fn>,
-		v2::ienumerable<typename Enumerable::value_type>>  // !! Fix enumerable to maybe ireversible
+		methods<select_many_t<Enumerable,Fn>,
+		ienumerable<typename Enumerable::value_type>>  // !! Fix enumerable to maybe ireversible
 	{
 		typedef select_t<Enumerable, Fn> selection_type;
 	public:

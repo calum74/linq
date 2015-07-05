@@ -61,7 +61,7 @@ void tutorial()
 		where([](const Person &p) { return p.age>=100; });
 
 	// Pass a sequence into another module
-	void congratulate(linq::v2::enumerable<Person> people);
+	void congratulate(linq::enumerable<Person> people);
 	congratulate(centegenarians);
 
 	// Enumerate a sequence
@@ -97,7 +97,7 @@ void tutorial()
 
 }
 
-void congratulate(linq::v2::enumerable<Person> people)
+void congratulate(linq::enumerable<Person> people)
 {
 	// Enumerate a sequence
 	for(const auto & p : people)

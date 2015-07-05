@@ -11,7 +11,7 @@
 
 namespace linq
 {	template<typename T, size_t N>
-	class array_ref : public v2::decorate<array_ref<T,N>, v2::ireversible<T>>
+	class array_ref : public methods<array_ref<T,N>, ireversible<T>>
 	{
 	public:
 		array_ref(T*data) : data(data) { }
