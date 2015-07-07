@@ -26,15 +26,14 @@ namespace linq
 		typedef int size_type;
 		typedef typename Base::value_type value_type;
 		typedef const value_type & const_reference;
-		// typedef Stored stored_type;
-		typedef Stored derived_type;
+		typedef Stored stored_type;
 
 		const Derived & get() const { return *static_cast<const Derived*>(this); }
 
 		template<typename Fn>
-		select_t<derived_type,Fn> select(Fn fn) const
+		select_t<stored_type,Fn> select(Fn fn) const
 		{
-			return select_t<derived_type,Fn>(get(),fn);
+			return select_t<stored_type,Fn>(get(),fn);
 		}
 
 
@@ -125,10 +124,10 @@ namespace linq
 		}
 
 		template<typename Struct, typename Field>
-		select_t<derived_type, select_field<Struct, Field>>
+		select_t<stored_type, select_field<Struct, Field>>
 		select(Field Struct::*field) const
 		{
-			return select_t<derived_type, select_field<Struct,Field>>(get(), field);
+			return select_t<stored_type, select_field<Struct,Field>>(get(), field);
 		}
 
 		template<typename Cmp>
@@ -147,9 +146,9 @@ namespace linq
 			return this->move_first() ? this->get_value() : def;
 		}
 
-		reverse_t<derived_type> reverse() const
+		reverse_t<stored_type> reverse() const
 		{
-			return reverse_t<derived_type>(get());
+			return reverse_t<stored_type>(get());
 		}
 
 		//value_type last_or_default(value_type def = value_type()) const
@@ -157,19 +156,19 @@ namespace linq
 	//		return this->move_last() ? this->get_value() : def;
 	//	}
 
-		skip_t<derived_type> skip(int n) const
+		skip_t<stored_type> skip(int n) const
 		{
-			return skip_t<derived_type>(get(),n);
+			return skip_t<stored_type>(get(),n);
 		}
 
-		limit_t<derived_type> first(int n) const
+		limit_t<stored_type> first(int n) const
 		{
-			return limit_t<derived_type>(get(),n);
+			return limit_t<stored_type>(get(),n);
 		}
 
-		skip_t<derived_type> last(size_type n) const
+		skip_t<stored_type> last(size_type n) const
 		{
-			return skip_t<derived_type>(get(),count()-n);
+			return skip_t<stored_type>(get(),count()-n);
 		}
 
 		template<typename Container>
@@ -201,47 +200,47 @@ namespace linq
 		}
 
 		template<typename P>
-		where_t<derived_type, P> where(P pred) const
+		where_t<stored_type, P> where(P pred) const
 		{
-			return where_t<derived_type,P>(get(),pred);
+			return where_t<stored_type,P>(get(),pred);
 		}
 
 		template<typename E2>
-		concat_t<derived_type, typename E2::stored_type> concat(const E2 & e2) const
+		concat_t<stored_type, typename E2::stored_type> concat(const E2 & e2) const
 		{
-			return concat_t<derived_type, typename E2::stored_type>(get(), e2);
+			return concat_t<stored_type, typename E2::stored_type>(get(), e2);
 		}
 
 		template<typename Predicate>
-		until_t<derived_type,Predicate> until(Predicate p) const
+		until_t<stored_type,Predicate> until(Predicate p) const
 		{
-			return until_t<derived_type,Predicate>(get(), p);
+			return until_t<stored_type,Predicate>(get(), p);
 		}
 
 		template<typename Fn>
-		select_many_t<derived_type,Fn> select_many(Fn fn) const
+		select_many_t<stored_type,Fn> select_many(Fn fn) const
 		{
-			return select_many_t<derived_type,Fn>(get(), fn);
+			return select_many_t<stored_type,Fn>(get(), fn);
 		}
 
-		repeat_t<derived_type> repeat() const
+		repeat_t<stored_type> repeat() const
 		{
-			return repeat_t<derived_type>(get());
+			return repeat_t<stored_type>(get());
 		}
 
-		repeat_n_t<derived_type> repeat(int n) const
+		repeat_n_t<stored_type> repeat(int n) const
 		{
-			return repeat_n_t<derived_type>(get(), n);
+			return repeat_n_t<stored_type>(get(), n);
 		}
 
-		select_t<derived_type, keys_t<derived_type>> keys() const
+		select_t<stored_type, keys_t<stored_type>> keys() const
 		{
-			return select_t<derived_type, keys_t<derived_type>> (get(), keys_t<Derived>());
+			return select_t<stored_type, keys_t<stored_type>> (get(), keys_t<Derived>());
 		}
 
-		select_t<derived_type, values_t<derived_type>> values() const
+		select_t<stored_type, values_t<stored_type>> values() const
 		{
-			return select_t<derived_type, values_t<derived_type>> (get(), values_t<Derived>());
+			return select_t<stored_type, values_t<stored_type>> (get(), values_t<Derived>());
 		}
 
 		sequence_ptr<value_type> ptr() const

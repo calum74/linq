@@ -32,15 +32,12 @@ namespace linq
 		virtual bool move_next() const=0;
 	};
 
+	// A reference to a sequence.
 	template<typename T>
 	class sequence_ref : public methods<sequence_ref<T>, sequence<T>>
 	{
 	public:
 		sequence_ref(const isequence<T> & ref) : m_ref(ref)
-		{
-		}
-		
-		sequence_ref(const sequence_ref & src) : m_ref(src.m_ref)
 		{
 		}
 
@@ -52,10 +49,9 @@ namespace linq
 		const isequence<T> & m_ref;
 	};
 
+	// An abstract (pure virtual) class representing a sequence of type T.
 	template<typename T>
 	class sequence : public methods<sequence<T>, isequence<T>, sequence_ref<T>>
 	{
-	public:
-		typedef sequence_ref<T> stored_type;
 	};
 }
