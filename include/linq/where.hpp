@@ -13,12 +13,14 @@
 namespace linq
 {
 	template<typename Enumerable, typename Predicate>
-	class where_t : public methods<where_t<Enumerable,Predicate>, typename Enumerable::interface_type>
+	class where_t : public
+		methods<where_t<Enumerable,Predicate>, sequence<typename Enumerable::value_type> >
 	{
 		Enumerable source;
 		Predicate predicate;
 	public:
 		where_t(Enumerable s, Predicate p) : source(s), predicate(p) { }
+		// where_t(where_t && a) : source(std::move(a.source)), predicate(std::move(a.predicate)) { }
 
 		typedef typename Enumerable::value_type value_type;
 

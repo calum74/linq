@@ -18,7 +18,7 @@ namespace linq
 		typedef T value_type;
 		
 		template<typename Cmp>
-		sort_t(const ienumerable<value_type> & src, Cmp cmp=std::less<value_type>(), Alloc alloc = Alloc()) : container_store<std::vector<T,Alloc>>(src, alloc)
+		sort_t(const sequence<value_type> & src, Cmp cmp=std::less<value_type>(), Alloc alloc = Alloc()) : container_store<std::vector<T,Alloc>>(src, alloc)
 		{
 			std::sort(this->container.begin(), this->container.end(), cmp);
 		}

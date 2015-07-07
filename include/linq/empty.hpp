@@ -12,7 +12,7 @@
 namespace linq
 {
 	template<typename T>
-	class empty : public methods<empty<T>, ireversible<T>>
+	class empty : public methods<empty<T>, sequence<T>>
 	{
 	public:
 		typedef T value_type;

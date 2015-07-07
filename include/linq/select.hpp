@@ -102,29 +102,11 @@ namespace linq
 		typedef typename select_result<result_type>::value_type value_type;
 	};
 
-	template<typename NewT, typename interface>
-	struct select_base;
-
-	template<typename NewT, typename OldT>
-	struct select_base<NewT, ienumerable<OldT>>
-	{
-		typedef ienumerable<NewT> type;
-	};
-
-	template<typename NewT, typename OldT>
-	struct select_base<NewT, ireversible<OldT>>
-	{
-		typedef ireversible<NewT> type;
-	};
-
 
 	template<typename Enumerable, typename Fn>
 	class select_t : public methods<
 		select_t<Enumerable,Fn>,
-		typename select_base<
-			typename select_value_type<Enumerable,Fn>::value_type,
-			typename Enumerable::interface_type>::type
-			>
+		sequence<typename select_value_type<Enumerable,Fn>::value_type>>
 	{
 		// Ideally a lambda would define a type "result_type", like so.
 		// typedef typename Fn::result_type value_type;
@@ -216,7 +198,7 @@ namespace linq
 	template<typename Enumerable, typename Fn>
 	class select_many_t : public
 		methods<select_many_t<Enumerable,Fn>,
-		ienumerable<typename Enumerable::value_type>>  // !! Fix enumerable to maybe ireversible
+		isequence<typename Enumerable::value_type>>
 	{
 		typedef select_t<Enumerable, Fn> selection_type;
 	public:

@@ -13,66 +13,6 @@ namespace linq
 {
 	namespace util
 	{
-		template<typename Interface1, typename Interface2>
-		struct combined_interface;
-
-		template<typename T>
-		struct combined_interface<T, T>
-		{
-			typedef T type;
-		};
-
-		template<typename T>
-		struct combined_interface<ienumerable<T>, ireversible<T>>
-		{
-			typedef ienumerable<T> type;
-		};
-
-		template<typename T>
-		struct combined_interface<ireversible<T>, ienumerable<T>>
-		{
-			typedef ienumerable<T> type;
-		};
-
-		template<typename Iterator,
-			typename IteratorCategory = typename std::iterator_traits<Iterator>::iterator_category>
-		struct enumerable_type;
-
-		template<typename Iterator>
-		struct enumerable_type<Iterator, std::input_iterator_tag>
-		{
-			typedef typename std::iterator_traits<Iterator>::value_type value_type;
-			typedef ienumerable<value_type> iface;
-		};
-
-		template<typename Iterator>
-		struct enumerable_type<Iterator, std::forward_iterator_tag>
-		{
-			typedef typename std::iterator_traits<Iterator>::value_type value_type;
-			typedef ienumerable<value_type> iface;
-		};
-
-		template<typename Iterator>
-		struct enumerable_type<Iterator, std::bidirectional_iterator_tag>
-		{
-			typedef typename std::iterator_traits<Iterator>::value_type value_type;
-			typedef ireversible<value_type> iface;
-		};
-
-		template<typename Iterator>
-		struct enumerable_type<Iterator, std::random_access_iterator_tag>
-		{
-			typedef typename std::iterator_traits<Iterator>::value_type value_type;
-			typedef ireversible<value_type> iface;
-		};
-
-		template<typename Container>
-		struct container_type
-		{
-			typedef typename enumerable_type<typename Container::const_iterator>::iface iface;
-		};
-
-
 		// There's probably a library for this...
 		template<typename T> struct nonconst
 		{

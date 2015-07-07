@@ -16,7 +16,7 @@ namespace linq
 	template<typename Container>
 	class container_ref : public methods<
 		container_ref<Container>,
-		typename util::container_type<Container>::iface >
+		sequence<typename Container::value_type> >
 	{
 	public:
 		container_ref(const Container &c) : source(&c) { }

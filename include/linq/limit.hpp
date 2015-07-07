@@ -13,7 +13,7 @@ namespace linq
 {
 	// Skips over a number of items 
 	template<typename Enumerable>
-	class skip_t : public methods<skip_t<Enumerable>, ienumerable<typename Enumerable::value_type>>
+	class skip_t : public methods<skip_t<Enumerable>, sequence<typename Enumerable::value_type>>
 	{
 	public:
 		skip_t(Enumerable s, int n) : source(s), to_skip(n) { }
@@ -42,7 +42,7 @@ namespace linq
 
 	// Limits the number of items
 	template<typename Enumerable>
-	class limit_t : public methods<limit_t<Enumerable>, ienumerable<typename Enumerable::value_type>>
+	class limit_t : public methods<limit_t<Enumerable>, sequence<typename Enumerable::value_type>>
 	{
 	public:
 		typedef typename Enumerable::value_type value_type;

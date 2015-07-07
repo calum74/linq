@@ -18,20 +18,23 @@ namespace linq
 	};
 
 
-	template<typename Derived, typename Base>
+	// !! Drop Base and just have isequence
+	template<typename Derived, typename Base, typename Stored>
 	class methods : public Base, public user_hooks<Derived, void>
 	{
 	public:
 		typedef int size_type;
 		typedef typename Base::value_type value_type;
 		typedef const value_type & const_reference;
+		// typedef Stored stored_type;
+		typedef Stored derived_type;
 
 		const Derived & get() const { return *static_cast<const Derived*>(this); }
 
 		template<typename Fn>
-		select_t<Derived,Fn> select(Fn fn) const
+		select_t<derived_type,Fn> select(Fn fn) const
 		{
-			return select_t<Derived,Fn>(get(),fn);
+			return select_t<derived_type,Fn>(get(),fn);
 		}
 
 
@@ -39,7 +42,7 @@ namespace linq
 		{
 		public:
 			typedef value_type value_type;
-			typedef typename Base::iterator_category iterator_category;
+			typedef typename std::forward_iterator_tag iterator_category;
 			typedef const value_type * pointer;
 			typedef int difference_type;
 			typedef const value_type & reference;
@@ -61,43 +64,13 @@ namespace linq
 		};
 
 
-		class reverse_iterator
-		{
-		public:
-			typedef value_type value_type;
-			typedef typename Base::iterator_category iterator_category;
-			typedef const value_type * pointer;
-			typedef int difference_type;
-			typedef const value_type & reference;
-
-			reverse_iterator(const methods *e) : e(e->move_last() ? e : nullptr)
-			{
-			}
-
-			reverse_iterator() : e(nullptr) { }
-
-			bool operator==(const reverse_iterator &a) const { return e==a.e; }
-			bool operator!=(const reverse_iterator &a) const { return e!=a.e; }
-
-			reference operator*() const { return e->get_value(); }
-			reverse_iterator operator++() { if(!e->move_prev()) e=nullptr; return *this; }
-			reverse_iterator operator--() { if(!e->move_next()) e=nullptr; return *this; }
-		private:
-			const methods * e;
-		};
-
 		typedef iterator const_iterator;
-		typedef reverse_iterator const_reverse_iterator;
 
 		iterator begin() const { return iterator(this); }
 		iterator end() const { return iterator(); }
-		reverse_iterator rbegin() const { return reverse_iterator(this); }
-		reverse_iterator rend() const { return reverse_iterator(); }
 
 		iterator cbegin() const { return iterator(this); }
 		iterator cend() const { return iterator(); }
-		reverse_iterator crbegin() const { return reverse_iterator(this); }
-		reverse_iterator crend() const { return reverse_iterator(); }
 
 
 		template<typename Fn, typename T>
@@ -152,10 +125,10 @@ namespace linq
 		}
 
 		template<typename Struct, typename Field>
-		select_t<Derived, select_field<Struct, Field>>
+		select_t<derived_type, select_field<Struct, Field>>
 		select(Field Struct::*field) const
 		{
-			return select_t<Derived, select_field<Struct,Field>>(get(), field);
+			return select_t<derived_type, select_field<Struct,Field>>(get(), field);
 		}
 
 		template<typename Cmp>
@@ -174,29 +147,29 @@ namespace linq
 			return this->move_first() ? this->get_value() : def;
 		}
 
-		reverse_t<Derived> reverse() const
+		reverse_t<derived_type> reverse() const
 		{
-			return reverse_t<Derived>(get());
+			return reverse_t<derived_type>(get());
 		}
 
-		value_type last_or_default(value_type def = value_type()) const
+		//value_type last_or_default(value_type def = value_type()) const
+		//{
+	//		return this->move_last() ? this->get_value() : def;
+	//	}
+
+		skip_t<derived_type> skip(int n) const
 		{
-			return this->move_last() ? this->get_value() : def;
+			return skip_t<derived_type>(get(),n);
 		}
 
-		skip_t<Derived> skip(int n) const
+		limit_t<derived_type> first(int n) const
 		{
-			return skip_t<Derived>(get(),n);
+			return limit_t<derived_type>(get(),n);
 		}
 
-		limit_t<Derived> first(int n) const
+		skip_t<derived_type> last(size_type n) const
 		{
-			return limit_t<Derived>(get(),n);
-		}
-
-		skip_t<Derived> last(size_type n) const
-		{
-			return skip_t<Derived>(get(),count()-n);
+			return skip_t<derived_type>(get(),count()-n);
 		}
 
 		template<typename Container>
@@ -209,7 +182,7 @@ namespace linq
 		// !! Allocator
 		container_store<std::vector<value_type>> copy() const
 		{
-			return container_store<std::vector<value_type>>(*this);
+			return container_store<std::vector<value_type>>(get());
 		}
 
 		bool any() const
@@ -228,60 +201,53 @@ namespace linq
 		}
 
 		template<typename P>
-		where_t<Derived, P> where(P pred) const
+		where_t<derived_type, P> where(P pred) const
 		{
-			return where_t<Derived,P>(get(),pred);
+			return where_t<derived_type,P>(get(),pred);
 		}
 
 		template<typename E2>
-		concat_t<Derived, E2> concat(const E2 & e2) const
+		concat_t<derived_type, typename E2::stored_type> concat(const E2 & e2) const
 		{
-			return concat_t<Derived, E2>(get(), e2);
+			return concat_t<derived_type, typename E2::stored_type>(get(), e2);
 		}
 
 		template<typename Predicate>
-		until_t<Derived,Predicate> until(Predicate p) const
+		until_t<derived_type,Predicate> until(Predicate p) const
 		{
-			return until_t<Derived,Predicate>(get(), p);
+			return until_t<derived_type,Predicate>(get(), p);
 		}
 
 		template<typename Fn>
-		select_many_t<Derived,Fn> select_many(Fn fn) const
+		select_many_t<derived_type,Fn> select_many(Fn fn) const
 		{
-			return select_many_t<Derived,Fn>(get(), fn);
+			return select_many_t<derived_type,Fn>(get(), fn);
 		}
 
-		repeat_t<Derived> repeat() const
+		repeat_t<derived_type> repeat() const
 		{
-			return repeat_t<Derived>(get());
+			return repeat_t<derived_type>(get());
 		}
 
-		repeat_n_t<Derived> repeat(int n) const
+		repeat_n_t<derived_type> repeat(int n) const
 		{
-			return repeat_n_t<Derived>(get(), n);
+			return repeat_n_t<derived_type>(get(), n);
 		}
 
-		select_t<Derived, keys_t<Derived>> keys() const
+		select_t<derived_type, keys_t<derived_type>> keys() const
 		{
-			return select_t<Derived, keys_t<Derived>> (get(), keys_t<Derived>());
+			return select_t<derived_type, keys_t<derived_type>> (get(), keys_t<Derived>());
 		}
 
-		select_t<Derived, values_t<Derived>> values() const
+		select_t<derived_type, values_t<derived_type>> values() const
 		{
-			return select_t<Derived, values_t<Derived>> (get(), values_t<Derived>());
+			return select_t<derived_type, values_t<derived_type>> (get(), values_t<Derived>());
 		}
 
-		enumerable_ptr<Base> ptr() const
+		sequence_ptr<value_type> ptr() const
 		{
-			return enumerable_ptr<Base>(std::make_shared<Derived>(get()));
+			return sequence_ptr<value_type>(get());
 		}
-
-		template<typename Alloc>
-		enumerable_ptr<Base> ptr(const Alloc & a) const
-		{
-			return enumerable_ptr<Base>(std::allocate_shared<Derived>(a, get()));
-		}
-
 	};
 }
 

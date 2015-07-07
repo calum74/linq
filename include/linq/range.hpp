@@ -11,7 +11,7 @@
 namespace linq
 {
 	template<typename T>
-	class range_t : public methods<range_t<T>, ireversible<T>>
+	class range_t : public methods<range_t<T>, sequence<T>>
 	{
 	private:
 		T from, stride, to;
@@ -24,8 +24,6 @@ namespace linq
 		range_t(T from, T to, T stride) : from(from), to(to), stride(stride)
 		{
 		}
-
-		range_t() { }
 
 		bool move_first() const
 		{

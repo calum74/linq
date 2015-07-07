@@ -11,13 +11,9 @@
 
 namespace linq
 {
-	template<typename T> class ienumerable;
-	template<typename T> class ireversible;
+	template<typename T> class isequence;
 
-	template<typename T> class enumerable;
-	template<typename T> class reversible;
-
-	template<typename Derived, typename Base> class methods;
+	template<typename Derived, typename Base, typename Stored=Derived> class methods;
 
 	// ?? Shared_ptr<ienumerable>
 
@@ -57,7 +53,9 @@ namespace linq
 	template<typename E> class keys_t;
 	template<typename E> class values_t;
 
-	template<typename Base> class enumerable_ptr;
+	template<typename T> class sequence_ptr;
+
+	template<typename T> class sequence;
 }
 
 

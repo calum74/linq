@@ -13,8 +13,7 @@ namespace linq
 {
 	template<typename Enumerable1, typename Enumerable2>
 	class concat_t : public methods<concat_t<Enumerable1, Enumerable2>,
-		typename util::combined_interface<
-			typename Enumerable1::interface_type, typename Enumerable2::interface_type>::type>
+		sequence<typename Enumerable1::value_type>>
 	{
 	public:
 		concat_t(Enumerable1 e1, Enumerable2 e2) : e1(e1), e2(e2) { }

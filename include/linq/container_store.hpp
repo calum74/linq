@@ -16,14 +16,14 @@ namespace linq
 	template<typename Container>
 	class container_store : public methods<
 		container_store<Container>,
-		typename util::container_type<Container>::iface >
+		sequence<typename Container::value_type>>
 	{
 	public:
 		typedef typename Container::value_type value_type;
 		typedef typename Container::const_iterator container_iterator;
 		typedef typename Container::allocator_type allocator_type;
 
-		container_store(enumerable<value_type> s, allocator_type alloc = allocator_type()) : container(alloc)
+		container_store(const sequence<value_type> &s, allocator_type alloc = allocator_type()) : container(alloc)
 		{
 			// container.assign(s.begin(), s.end());
 			for(const auto &i : s)
