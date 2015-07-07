@@ -23,7 +23,7 @@ namespace linq
 	template<typename Source, typename Predicate>
 	class select_t;
 
-	template<typename Source>
+	template<typename T, typename Alloc=std::allocator<T>>
 	class reverse_t;
 
 	template<typename Container>

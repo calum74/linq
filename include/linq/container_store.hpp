@@ -23,9 +23,17 @@ namespace linq
 		typedef typename Container::const_iterator container_iterator;
 		typedef typename Container::allocator_type allocator_type;
 
-		container_store(const sequence<value_type> &s, allocator_type alloc = allocator_type()) : container(alloc)
+		template<typename It>
+		container_store(It from, It to, allocator_type alloc = allocator_type()) :
+			container(alloc)
 		{
-			// container.assign(s.begin(), s.end());
+			for(It a=from; a!=to; ++a)
+				container.push_back(*a);
+		}
+
+		container_store(const sequence<value_type> &s, allocator_type alloc = allocator_type()) :
+			container(alloc)
+		{
 			for(const auto &i : s)
 				container.push_back(i);
 		}

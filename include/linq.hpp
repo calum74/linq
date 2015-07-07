@@ -24,7 +24,7 @@
 #include "linq/concat.hpp"
 #include "linq/select.hpp"
 #include "linq/where.hpp"
-// #include "linq/reverse.hpp"
+#include "linq/reverse.hpp"
 #include "linq/sort.hpp"
 #include "linq/empty.hpp"
 #include "linq/value.hpp"

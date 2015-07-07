@@ -11,21 +11,17 @@
 
 namespace linq
 {
-	template<typename Enumerable>
-	class reverse_t : public methods<reverse_t<Enumerable>, typename Enumerable::interface_type>
+	template<typename T, typename Alloc>
+	class reverse_t : public container_store<std::vector<T, Alloc>>
 	{
 	public:
-		typedef typename Enumerable::value_type value_type;
-
-		reverse_t(Enumerable s) : source(s) { }
-
-		bool move_first() const { return source.move_last(); }
-		bool move_next() const { return source.move_prev(); }
-		bool move_prev() const { return source.move_next(); }
-		bool move_last() const { return source.move_first(); }
-		const value_type & get_value() const { return source.get_value(); }
-	private:
-		Enumerable source;
+		typedef T value_type;
+		
+		reverse_t(const sequence<value_type> & src, Alloc alloc = Alloc()) :
+			container_store<std::vector<T,Alloc>>(src, alloc)
+		{
+			std::reverse(this->container.begin(), this->container.end());
+		}
 	};
 }
 

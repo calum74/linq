@@ -22,7 +22,6 @@ namespace linq
 		}
 
 		typedef typename std::iterator_traits<It>::value_type value_type;
-		typedef const value_type & get_value_type;
 
 		bool move_first() const
 		{
@@ -35,22 +34,38 @@ namespace linq
 			return to != ++current;
 		}
 
-		bool move_prev() const
+		const value_type & get_value() const { return *current; }
+
+	private:
+		It from, to;
+		mutable It current;
+	};
+
+	template<typename It>
+	class iterator_from :
+		public methods<iterator_from<It>, sequence<typename std::iterator_traits<It>::value_type>>
+	{
+	public:
+		iterator_from(It s) : from(s) { }
+
+		typedef typename std::iterator_traits<It>::value_type value_type;
+
+		bool move_first() const
 		{
-			It from2 = from;
-			return (--current) != (--from2);
+			current = from;
+			return true;
 		}
 
-		bool move_last() const
+		bool move_next() const
 		{
-			current = to;
-			return move_prev();
+			++current;
+			return true;
 		}
 
 		const value_type & get_value() const { return *current; }
 
 	private:
-		It from, to;
+		It from;
 		mutable It current;
 	};
 
@@ -76,6 +91,12 @@ namespace linq
 	inline iterator_pair<const char*> from(const char * str)
 	{
 		return iterator_pair<const char*>(str, str+std::strlen(str));
+	}
+
+	template<typename It>
+	iterator_from<It> from_unbounded(It it)
+	{
+		return iterator_from<It>(it);
 	}
 }
 

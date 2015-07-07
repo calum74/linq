@@ -198,14 +198,13 @@ namespace linq
 	template<typename Enumerable, typename Fn>
 	class select_many_t : public
 		methods<select_many_t<Enumerable,Fn>,
-		isequence<typename Enumerable::value_type>>
+		// isequence<typename Enumerable::value_type>>
+		sequence<typename select_t<Enumerable, Fn>::value_type::value_type>>
+
 	{
 		typedef select_t<Enumerable, Fn> selection_type;
 	public:
 		typedef typename selection_type::value_type::value_type value_type;
-		// typedef typename selection_type::enumerable_type enumerable_type;
-
-		// It's bidirectional if BOTH enumerators
 
 		select_many_t(Enumerable e, Fn fn) : selection(e, fn)
 		{

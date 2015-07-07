@@ -75,10 +75,8 @@ void test_enumerable2(const E &e)
 	assert( e.last(1) == linq::from({3}) );
 	assert( e.first(1) == linq::from({1}) );
 
-	//if(e.reverse().any())
-	//{
-	//	assert( e.last_or_default()==3);
-	//}
+	assert( e.last_or_default()==3);
+	assert( e.first(2).last_or_default()==2 );
 
 	assert( e.copy() == e.select([](int i) { return i; }));
 	assert( e.concat(e) == linq::from({1,2,3,1,2,3}) );
@@ -98,24 +96,9 @@ void test_enumerable2(const E &e)
 	assert( e.select_many( [](int x) { return linq::value(x); } ) == e2 );
 	assert( linq::value(1).select_many([&](int x) { return e.copy(); } ) == e2);
 
-	{
-		// ?? How to prevent this
-
-		//linq::sequence<int> e1=e.where([](int x) { return x==1; });
-
-		//std::cout << e1.count();	// Error
-		// linq::enumerable_ptr<int> e2=e;
-	}
-}
-
-template<typename E>
-void test_reversible2(const E&e)
-{
+	// e.reverse();
 	assert( e.reverse()==linq::from({3,2,1}));
 
-	assert( e.last_or_default() == 3 );
-
-	assert( linq::from(e.rbegin(), e.rend()) == linq::from({3,2,1}));
 }
 
 template<typename E>
@@ -126,6 +109,9 @@ void test_enumerable(E e)
 	// test_enumerable2((const linq::sequence<int>&)e);
 	test_enumerable2(e.ptr());
 	// test_enumerable2(e.ptr(std::allocator<char>()));
+
+
+	assert( e.last_or_default() == 3 );
 }
 
 struct data
@@ -172,7 +158,7 @@ int main(int argc, const char * argv[])
 	m1[2]=2;
 	m1[3]=1;
 	test_enumerable(linq::from(m1).keys());
-	// test_enumerable(linq::from(m1).values().reverse());
+	test_enumerable(linq::from(m1).values().reverse());
 
 	test_enumerable(linq::range(-1,3).skip(2));
 
@@ -204,16 +190,15 @@ int main(int argc, const char * argv[])
 	linq::from(m1.lower_bound(1), m1.upper_bound(1));
 
 	test_enumerable(linq::from({1,2,3}));
-	// test_enumerable(linq::from({3,2,1}).reverse());
+	test_enumerable(linq::from({3,2,1}).reverse());
 
 	assert( linq::empty<int>().first_or_default(1) == 1 );
-	// assert( linq::empty<int>().last_or_default(1) == 1 );
-	// assert( intseq(linq::empty<int>()).first_or_default(1) == 1 );
-	// assert( reversible_seq(linq::empty<int>()).last_or_default(1) == 1 );
+	assert( linq::empty<int>().last_or_default(1) == 1 );
+	assert( intseq(linq::empty<int>()).first_or_default(1) == 1 );
 
 	test_enumerable( linq::range(-1,3).skip(2) );
 	test_enumerable( linq::range(1,10).first(3) );
-	// test_enumerable( (intseq)(linq::range(1,10)).first(3) );
+	//test_enumerable( (intseq)(linq::range(1,10)).first(3) );
 
 	test_enumerable( linq::range(-1,3).last(3) );
 
@@ -233,20 +218,19 @@ int main(int argc, const char * argv[])
 	test_enumerable(many.first(3));
 
 	auto manymore = linq::range(7,1,-3).select_many([](int v) { return linq::range(v+2,v,-1); });
-	//assert(many.reverse()==manymore);
-	//assert(manymore.reverse()==many);
-	//test_enumerable(manymore.reverse().first(3));
-	//test_enumerable(manymore.last(3).copy().reverse());
+	assert(many.reverse()==manymore);
+	assert(manymore.reverse()==many);
+	test_enumerable(manymore.reverse().first(3));
+	test_enumerable(manymore.last(3).copy().reverse());
 
 
 	test_enumerable( linq::from({1,2,3}).repeat().skip(6).first(3) );
 
 	assert( linq::value(1).repeat().first(100).sum() == 100 );
-	//assert( linq::from({1,2,3}).repeat().first(5) == linq::from({1,2,3,1,2}) );
-	//assert( linq::from({1,2,3}).repeat().reverse().first(2) == linq::from({3,2}) );
+	assert( linq::from({1,2,3}).repeat().first(5) == linq::from({1,2,3,1,2}) );
 
 	assert( linq::from({1,2}).repeat(4).sum() == 12 );
-	//assert( linq::from({1,2}).reverse().repeat(4).sum() == 12 );
+	assert( linq::from({1,2}).reverse().repeat(4).sum() == 12 );
 	assert( linq::value(1).repeat(100).sum()==100);
 
 	// repeat(int n) - repeat n times

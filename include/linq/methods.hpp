@@ -17,8 +17,6 @@ namespace linq
 	{
 	};
 
-
-	// !! Drop Base and just have isequence
 	template<typename Derived, typename Base, typename Stored>
 	class methods : public Base, public user_hooks<Derived, void>
 	{
@@ -96,9 +94,6 @@ namespace linq
 				[](int total, const value_type & item) { return total+1; }, 0);
 		}
 
-		// std::shared_ptr<enumerable<T>> make_shared()
-
-
 		template<typename Predicate>
 		size_type count(Predicate p) const
 		{
@@ -146,15 +141,20 @@ namespace linq
 			return this->move_first() ? this->get_value() : def;
 		}
 
-		reverse_t<stored_type> reverse() const
+		// !! Alloc version
+		reverse_t<value_type> reverse() const
 		{
-			return reverse_t<stored_type>(get());
+			return reverse_t<value_type>(get());
 		}
 
-		//value_type last_or_default(value_type def = value_type()) const
-		//{
-	//		return this->move_last() ? this->get_value() : def;
-	//	}
+		value_type last_or_default(value_type def = value_type()) const
+		{
+			for(bool valid = this->move_first(); valid; valid = this->move_next())
+			{
+				def = this->get_value();
+			}
+			return def;
+		}
 
 		skip_t<stored_type> skip(int n) const
 		{
