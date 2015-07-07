@@ -19,8 +19,6 @@ namespace linq
 
 		bool move_first() const { return false; }
 		bool move_next() const { return false; }
-		bool move_prev() const { return false; }
-		bool move_last() const { return false; }
 
 		const value_type & get_value() const { return *(const value_type*)nullptr; }
 	};

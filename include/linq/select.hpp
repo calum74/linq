@@ -157,33 +157,6 @@ namespace linq
 			}
 		}
 
-		bool move_prev() const
-		{
-			if(source.move_prev())
-			{
-				set_value();
-				return true;
-			}
-			else
-			{
-				return false;
-			}
-		}
-
-		bool move_last() const
-		{
-			if(source.move_last())
-			{
-				set_value();
-				return true;
-			}
-			else
-			{
-				return false;
-			}
-		}
-
-
 	private:
 		Enumerable source;
 		Fn fn;
@@ -198,7 +171,6 @@ namespace linq
 	template<typename Enumerable, typename Fn>
 	class select_many_t : public
 		methods<select_many_t<Enumerable,Fn>,
-		// isequence<typename Enumerable::value_type>>
 		sequence<typename select_t<Enumerable, Fn>::value_type::value_type>>
 
 	{
@@ -224,15 +196,6 @@ namespace linq
 			return false;
 		}
 
-		bool move_last() const
-		{
-			for(bool valid = selection.move_last(); valid; valid=selection.move_prev())
-			{
-				if(selection.get_value().move_last()) return true;
-			}
-			return false;
-		}
-
 		bool move_next() const
 		{
 			if(selection.get_value().move_next())
@@ -241,20 +204,6 @@ namespace linq
 			while(selection.move_next())
 			{
 				if(selection.get_value().move_first())
-					return true;
-			}
-
-			return false;
-		}
-
-		bool move_prev() const
-		{
-			if(selection.get_value().move_prev())
-				return true;
-
-			while(selection.move_prev())
-			{
-				if(selection.get_value().move_last())
 					return true;
 			}
 

@@ -15,8 +15,6 @@ namespace linq
 
 	template<typename Derived, typename Base, typename Stored=Derived> class methods;
 
-	// ?? Shared_ptr<ienumerable>
-
 	template<typename Source, typename Predicate>
 	class where_t;
 

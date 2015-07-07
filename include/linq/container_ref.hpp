@@ -12,7 +12,6 @@
 namespace linq
 {
 	// References a container
-	// !! Base type: reversible or not ??
 	template<typename Container>
 	class container_ref : public methods<
 		container_ref<Container>,
@@ -26,25 +25,6 @@ namespace linq
 
 		bool move_first() const { current = source->begin(); return current!=source->end(); }
 		bool move_next() const { return ++current != source->end(); }
-		bool move_prev() const
-		{
-			if(current == source->begin())
-				return false;
-			else
-			{
-				--current;
-				return true;
-			}
-		}
-
-		bool move_last() const
-		{
-			current = source->end();
-			if(current == source->begin()) return false;
-			else
-				--current;
-				return true;
-		}
 
 		const value_type & get_value() const { return *current; }
 

@@ -20,7 +20,6 @@ namespace linq
 		Predicate predicate;
 	public:
 		where_t(Enumerable s, Predicate p) : source(s), predicate(p) { }
-		// where_t(where_t && a) : source(std::move(a.source)), predicate(std::move(a.predicate)) { }
 
 		typedef typename Enumerable::value_type value_type;
 
@@ -35,30 +34,9 @@ namespace linq
 			return false;
 		}
 
-		bool move_last() const
-		{
-			for(bool valid=source.move_last();
-				valid ;
-				valid=source.move_prev())
-			{
-				if(predicate(source.get_value())) return true;
-			}
-			return false;
-		}
-
-
 		bool move_next() const
 		{
 			for(bool valid=source.move_next(); valid; valid=source.move_next())
-			{
-				if(predicate(source.get_value())) return true;
-			}
-			return false;
-		}
-
-		bool move_prev() const
-		{
-			for(bool valid=source.move_prev(); valid; valid=source.move_prev())
 			{
 				if(predicate(source.get_value())) return true;
 			}

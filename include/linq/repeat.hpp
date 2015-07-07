@@ -21,8 +21,6 @@ namespace linq
 
 		bool move_first() const { return source.move_first(); }
 		bool move_next() const { return source.move_next() || source.move_first(); }
-		bool move_prev() const { return source.move_prev() || source.move_last(); }
-		bool move_last() const { return source.move_last(); }
 
 		const value_type & get_value() const { return source.get_value(); }
 
@@ -44,17 +42,6 @@ namespace linq
 		bool move_next() const
 		{
 			return source.move_next() || (++iteration<count && source.move_first());
-		}
-
-		bool move_last() const
-		{
-			iteration = count-1;
-			return count>0 && source.move_last();
-		}
-
-		bool move_prev() const
-		{
-			return source.move_prev() || (iteration-->0 && source.move_last());
 		}
 
 		const value_type & get_value() const { return source.get_value(); }

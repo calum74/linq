@@ -26,23 +26,12 @@ namespace linq
 			return N>0;
 		}
 
-		bool move_last() const
-		{
-			current = data+N-1;
-			return N>0;
-		}
-
 		bool move_next() const
 		{
 			++current;
 			return current <data+N;
 		}
 
-		bool move_prev() const
-		{
-			--current;
-			return current>=data;
-		}
 	private:
 		T * data;
 		mutable T * current;

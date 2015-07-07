@@ -41,23 +41,6 @@ namespace linq
 			}
 		}
 
-		bool move_prev() const
-		{
-			if(current==from)
-				return false;
-			else
-			{
-				current -= stride;
-				return true;
-			}
-		}
-
-		bool move_last() const
-		{
-			current = to;
-			return true;
-		}
-
 		const T &get_value() const { return current; }
 	};
 
@@ -66,6 +49,11 @@ namespace linq
 	range_t<T> range(T from, T to, T stride=1)
 	{
 		return range_t<T>(from, to, stride);
+	}
+
+	inline range_t<int> from(int a, int b, int stride=1)
+	{
+		return range_t<int>(a,b,stride);
 	}
 }
 

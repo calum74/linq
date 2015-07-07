@@ -13,7 +13,6 @@ namespace linq
 {
 	template<typename T>
 	class value_t :
-		// public methods<value_t<T>, ireversible<T>>,
 		public methods<value_t<T>, sequence<T>>
 	{
 	public:
@@ -24,8 +23,6 @@ namespace linq
 
 		bool move_first() const { return true; }
 		bool move_next() const { return false; }
-		bool move_prev() const { return false; }
-		bool move_last() const { return true; }
 	private:
 		value_type value;
 	};

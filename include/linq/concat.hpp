@@ -63,49 +63,6 @@ namespace linq
 			}
 		}
 
-		bool move_last() const
-		{
-			if(e2.move_last())
-			{
-				m_first=false;
-				return true;
-			}
-			else
-			{
-				if(e1.move_last())
-				{
-					m_first=true;
-					return true;
-				}
-				else
-					return false;
-			}
-		}
-
-		bool move_prev() const
-		{
-			if(!m_first)
-			{
-				if(e2.move_prev())
-				{
-					return true;
-				}
-				else if(e1.move_last())
-				{
-					m_first=true;
-					return true;
-				}
-				else
-				{
-					return false;
-				}
-			}
-			else
-			{
-				return e1.move_prev();
-			}
-		}
-
 		const value_type & get_value() const
 		{
 			return m_first ? e1.get_value() : e2.get_value();

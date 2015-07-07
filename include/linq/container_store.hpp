@@ -51,16 +51,7 @@ namespace linq
 			return (++current) != container.end();
 		}
 
-		bool move_prev() const
-		{
-			return (--current) != --container_iterator(container.begin());
-		}
-
-		bool move_last() const
-		{
-			current = container.end();
-			return move_prev();
-		}
+		// !! Efficient reverse ??
 
 	protected:
 		Container container;

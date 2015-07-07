@@ -19,7 +19,6 @@
 #include "linq/methods.hpp"
 #include "linq/sequence.hpp"
 
-#include "linq/enumerable.hpp"
 #include "linq/range.hpp"
 #include "linq/concat.hpp"
 #include "linq/select.hpp"
