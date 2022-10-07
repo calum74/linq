@@ -1,3 +1,7 @@
+# Notice
+
+This project has been superceded by [Sequence](https://github.com/calum74/sequence). Head over there for more LINQ goodness!
+
 # linq
 Yet another C++ LINQ.
 
